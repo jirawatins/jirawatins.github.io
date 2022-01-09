@@ -254,3 +254,12 @@
   });
 
 })()
+
+function _calculateAge(birthday) { // birthday is a date
+  var ageDifMs = Date.now() - birthday.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+document.getElementById("age").innerHTML = _calculateAge(new Date(2002, 6, 10));
+//console.log(_calculateAge(new Date(2002, 6, 10)));
