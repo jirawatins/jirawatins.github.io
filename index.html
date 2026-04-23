@@ -61,6 +61,41 @@
       font-size: 1.5rem !important;
       margin: 0 !important;
     }
+
+    /* -------------------------------------------
+       แก้อาการ Navbar หาย และ Scroll ไม่ได้บนมือถือ 
+       ------------------------------------------- */
+    /* บังคับไม่ให้ main.js ซ่อน Navbar */
+    #ftco-navbar {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    /* ปลดล็อกการเลื่อนหน้าจอแนวตั้งเสมอ */
+    body {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+    }
+
+    /* ตกแต่ง Navbar มาตรฐานของ Bootstrap บนมือถือ */
+    @media (max-width: 991.98px) {
+      #ftco-navbar {
+        background: #000000 !important;
+        /* ให้พื้นหลัง Navbar เป็นสีดำ */
+      }
+
+      .navbar-collapse {
+        background: #111111;
+        padding: 1rem;
+        border-radius: 0 0 10px 10px;
+        margin-top: 10px;
+      }
+
+      .navbar-nav .nav-link {
+        padding-left: 15px !important;
+      }
+    }
   </style>
 
 </head>
@@ -70,9 +105,10 @@
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="index.html">jirawatins</a>
-      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
-        data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"
+        style="border: none; outline: none;">
+        <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
@@ -689,6 +725,23 @@
     </svg>
   </div>
 
+  <script>
+    $(document).ready(function () {
+      // เมื่อคลิกที่ลิงก์ในเมนู ให้ทำการซ่อน (Collapse) เมนูลง
+      $('.navbar-nav .nav-link').on('click', function () {
+        if ($('.navbar-toggler').is(':visible')) {
+          $('.navbar-collapse').collapse('hide');
+        }
+      });
+
+      // ดักจับอีกชั้น: ป้องกัน main.js แอบใส่ overflow: hidden ตอนกดเมนู
+      $('.navbar-toggler').on('click', function () {
+        setTimeout(function () {
+          $('body').css('overflow-y', 'auto');
+        }, 100);
+      });
+    });
+  </script>
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/jquery-migrate-3.0.1.min.js"></script>
   <script src="assets/js/popper.min.js"></script>
